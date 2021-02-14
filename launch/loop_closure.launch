@@ -5,7 +5,7 @@
         args="5.214154202176700392e-02 -1.846812214940576902e-01 -4.561479952008089256e-02 -3.046857448372968236e+00 -1.631619169438448314e+00 -1.657808369943630566e+00 zed_left_camera_optical_frame velodyne"/>
 
     <!-- Custom node to publish dynamic transform between odom and base_link frames -->
-    <node pkg="rtabmap_example" type="odom_to_base_link_with_drift.py" name="odom_to_base_link" output="screen"/>
+    <node pkg="rtabmap_example" type="openvslam_odom_to_base_link_with_drift.py" name="odom_to_base_link" output="screen"/>
 
     <!-- Synchronization -->
     <node pkg="rtabmap_example" type="synchronize.py" name="synchronization" output="screen"/>
@@ -38,7 +38,7 @@
         
         <param name="Rtabmap/DetectionRate" value="100"/>
         <param name="Grid/RayTracing" value="true"/>
-        <param name="Grid/FromDepth" value="true"/>
+        <param name="Grid/FromDepth" value="false"/>
     </node>
 
 </launch>
