@@ -47,11 +47,11 @@ def odom_received(odom):
 
 
 if __name__ == '__main__':
-    rospy.init_node('transform_from_odom_to_base_link')
+    rospy.init_node('openvslam_odom_to_base_link')
     tfBroadcaster = tf2_ros.TransformBroadcaster()
     tfBuffer = tf2_ros.Buffer()
     tfListener = tf2_ros.TransformListener(tfBuffer)
     rospy.Subscriber('/OpenVSLAM/odom', Odometry, odom_received)
-    odom_publisher = rospy.Publisher('/odom_base_link', Odometry, queue_size=10)
+    odom_publisher = rospy.Publisher('/OpenVSLAM/odom_base_link', Odometry, queue_size=10)
     rospy.spin()
     

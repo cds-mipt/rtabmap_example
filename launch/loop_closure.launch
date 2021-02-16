@@ -5,11 +5,11 @@
         args="5.214154202176700392e-02 -1.846812214940576902e-01 -4.561479952008089256e-02 -3.046857448372968236e+00 -1.631619169438448314e+00 -1.657808369943630566e+00 zed_left_camera_optical_frame velodyne"/>
 
     <!-- Custom node to publish dynamic transform from odom to base_link -->
-    <node pkg="rtabmap_example" type="openvslam_odom_to_base_link_with_drift.py" name="odom_to_base_link" output="screen"/>
+    <node pkg="rtabmap_example" type="openvslam_odom_to_base_link_with_drift.py" name="openvslam_odom_to_base_link_with_drift" output="screen"/>
 
     <!-- Rtabmap mapping -->
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
-        <remap from="odom" to="/odom_base_link"/>
+        <remap from="odom" to="/OpenVSLAM/odom_base_link_with_drift"/>
 
         <remap from="left/image_rect" to="/zed_node/left/image_rect_color"/>
         <remap from="left/camera_info" to="/zed_node/left/camera_info"/>
