@@ -41,8 +41,6 @@ def get_robot_world_pose():
         print('Could not find transform from map to base_link')
         return None
     robot_world_pose = geometry_msgs.msg.PoseStamped()
-    robot_world_pose.header.stamp = map_to_base_link.header.stamp
-    robot_world_pose.header.frame_id = 'map'
     robot_world_pose.pose.position = map_to_base_link.transform.translation
     robot_world_pose.pose.orientation = map_to_base_link.transform.rotation
     return robot_world_pose
@@ -50,9 +48,6 @@ def get_robot_world_pose():
     
 def inverse_transform(transform):
     inversed_transform = geometry_msgs.msg.TransformStamped()
-    inversed_transform.header.stamp = transform.header.stamp
-    inversed_transform.header.frame_id = transform.child_frame_id
-    inversed_transform.child_frame_id = transform.header.frame_id
     
     inversed_rotation = geometry_msgs.msg.TransformStamped()
     inversed_rotation.transform.translation = geometry_msgs.msg.Vector3(0, 0, 0)
@@ -71,26 +66,22 @@ def inverse_transform(transform):
     return inversed_transform
 
 
-def transform_world_pose_to_occupancy_grid_pose(world_pose, occ_grid):
+def transform_world_pose_to_occupancy_grid_pose(world_pose, occ_grid_info):
     transform = geometry_msgs.msg.TransformStamped()
-    transform.header.stamp = occ_grid.header.stamp
-    transform.header.frame_id = 'map'
-    transform.child_frame_id = 'occupancy_grid'
-    transform.transform.translation = occ_grid.info.origin.position
-    transform.transform.rotation = occ_grid.info.origin.orientation
+    transform.transform.translation = occ_grid_info.origin.position
+    transform.transform.rotation = occ_grid_info.origin.orientation
     inversed_transform = inverse_transform(transform)
     
     occ_grid_pose = tf2_geometry_msgs.do_transform_pose(world_pose, inversed_transform)
     return occ_grid_pose
 
 
-def draw_robot_world_pose(image, k, robot_world_pose, occ_grid):
-    robor_occ_grid_pose = transform_world_pose_to_occupancy_grid_pose(robot_world_pose, occ_grid)
-    x = robor_occ_grid_pose.pose.position.x * k / occ_grid.info.resolution
-    y = robor_occ_grid_pose.pose.position.y * k / occ_grid.info.resolution
+def draw_pose(image, k, robot_pose, occ_grid_info):
+    x = robot_pose.pose.position.x * k / occ_grid_info.resolution
+    y = robot_pose.pose.position.y * k / occ_grid_info.resolution
     i = int(x)
     j = int(image.shape[0] - y)
-    angle = 2 * np.arccos(robor_occ_grid_pose.pose.orientation.w) * np.sign(robor_occ_grid_pose.pose.orientation.z)  # only for 3 DoF movement
+    angle = 2 * np.arccos(robot_pose.pose.orientation.w) * np.sign(robot_pose.pose.orientation.z)  # only for 3 DoF movements
     
     radius = 6
     length = 15
@@ -110,17 +101,18 @@ def process_occupancy_grid(occ_grid):
     robot_world_pose = get_robot_world_pose()
     if robot_world_pose is None:
         return()
-    draw_robot_world_pose(image, k, robot_world_pose, occ_grid)
+    robor_occ_grid_pose = transform_world_pose_to_occupancy_grid_pose(robot_world_pose, occ_grid.info)
+    draw_pose(image, k, robor_occ_grid_pose, occ_grid.info)
     image_message = bridge.cv2_to_imgmsg(image, encoding="passthrough")
     pub.publish(image_message)
 
 
 if __name__ == '__main__':
-    rospy.init_node('occupancy_grid_test')
+    rospy.init_node('occupancy_grid_demo')
     tfBuffer = tf2_ros.Buffer()
     tfListener = tf2_ros.TransformListener(tfBuffer)
     bridge = CvBridge()
     rospy.Subscriber('/grid_map', OccupancyGrid, process_occupancy_grid)
-    pub = rospy.Publisher('/occupancy_grid_test', Image, queue_size=10)
+    pub = rospy.Publisher('/occupancy_grid_demo', Image, queue_size=10)
     rospy.spin()
 
