@@ -4,12 +4,15 @@ from nav_msgs.msg import Odometry
 import tf2_ros
 import tf2_geometry_msgs
 import geometry_msgs.msg
+import sys
 
 
 def odom_received(odom):
     global tfBroadcaster
     global tfBuffer
     global odom_publisher
+    global drift_factor
+    global counter
 
     base_link_to_zed_left_camera_optical_frame = tfBuffer.lookup_transform('base_link', 'zed_left_camera_optical_frame', rospy.Time())
 
@@ -31,6 +34,9 @@ def odom_received(odom):
     odom_pose_base_link.pose.orientation.y = rotation_vector_base_link.vector.y
     odom_pose_base_link.pose.orientation.z = rotation_vector_base_link.vector.z
     odom_pose_base_link.pose.orientation.w = odom.pose.pose.orientation.w
+    
+    odom_pose_base_link.pose.position.y += counter * drift_factor
+    counter += 1
 
     odom_to_base_link = geometry_msgs.msg.TransformStamped()
     odom_to_base_link.header.stamp = odom.header.stamp
@@ -47,6 +53,10 @@ def odom_received(odom):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        raise ValueError()
+    drift_factor = float(sys.argv[1])
+    counter = 0
     rospy.init_node('openvslam_odom_to_base_link')
     tfBroadcaster = tf2_ros.TransformBroadcaster()
     tfBuffer = tf2_ros.Buffer()

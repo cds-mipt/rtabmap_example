@@ -14,10 +14,13 @@
     <!-- db_path - path to database -->
     <arg name="db_path" default="~/.ros/rtabmap.db"/>
     
+    <!-- OpenVSLAM odometry drift factor -->
+    <arg name="openvslam_drift" default="0"/> <!-- 0.005 -->
+    
     <!-- odom - odometry to use -->
     <arg name="odom" default="openvslam"/>
     <!-- Custom node to convert OpenVSLAM odom from camera frame to base_link and publish dynamic transform from odom to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="rtabmap_example" type="openvslam_odom_to_base_link.py" name="openvslam_odom_to_base_link" output="screen"/>
+    <node if="$(eval odom == 'openvslam')" pkg="rtabmap_example" type="openvslam_odom_to_base_link.py" name="openvslam_odom_to_base_link" output="screen" args="$(arg openvslam_drift)"/>
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
     
@@ -41,6 +44,7 @@
         <remap from="depth/image" to="/zed_node/depth/depth_registered"/>
 
         <!-- Данные, на которые подписывается rtabmap -->
+        <param name="subscribe_rgb" value="true"/>
         <param name="subscribe_stereo" value="false"/>
         <param name="subscribe_depth" value="true"/>
         <param name="subscribe_rgbd" value="false"/>
