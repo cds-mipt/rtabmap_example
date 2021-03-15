@@ -26,6 +26,10 @@
     
     <!-- local - localization -->
     <arg name="local" default="false"/>
+    
+    <!-- data to read -->
+    <arg name="rgb" default="true"/>
+    <arg name="depth" default="true"/>
 
     <!-- Rtabmap mapping -->
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" ns="rtabmap" output="screen" args="$(arg rtabmap_args)">
@@ -44,9 +48,9 @@
         <remap from="depth/image" to="/zed_node/depth/depth_registered"/>
 
         <!-- Данные, на которые подписывается rtabmap -->
-        <param name="subscribe_rgb" value="true"/>
+        <param name="subscribe_rgb" value="$(arg rgb)"/>
         <param name="subscribe_stereo" value="false"/>
-        <param name="subscribe_depth" value="true"/>
+        <param name="subscribe_depth" value="$(arg depth)"/>
         <param name="subscribe_rgbd" value="false"/>
         <param name="subscribe_scan" value="false"/>
         <param name="subscribe_scan_cloud" value="true"/>
@@ -69,6 +73,8 @@
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
         <param name="Grid/3D" value="false"/>
+        
+        <param name="Mem/STMSize" value="10"/>
     </node>
 
 </launch>
