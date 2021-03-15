@@ -27,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Image
+    SyncSource: PointCloud2
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -58,91 +58,13 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_footprint:
-          Value: true
         base_link:
-          Value: true
-        bay_cover:
-          Value: true
-        front_bumper_link:
-          Value: true
-        front_left_wheel_link:
-          Value: true
-        front_right_wheel_link:
-          Value: true
-        fssl01_arch:
-          Value: true
-        gripper_interface_link:
-          Value: true
-        gripper_left_inner_finger:
-          Value: true
-        gripper_left_inner_finger_pad:
-          Value: true
-        gripper_left_inner_knuckle:
-          Value: true
-        gripper_left_outer_finger:
-          Value: true
-        gripper_left_outer_knuckle:
-          Value: true
-        gripper_right_inner_finger:
-          Value: true
-        gripper_right_inner_finger_pad:
-          Value: true
-        gripper_right_inner_knuckle:
-          Value: true
-        gripper_right_outer_finger:
-          Value: true
-        gripper_right_outer_knuckle:
-          Value: true
-        gripper_robotiq_arg2f_base_link:
-          Value: true
-        imu_link:
-          Value: true
-        inertial_link:
           Value: true
         map:
           Value: true
         odom:
           Value: true
-        rear_bumper_link:
-          Value: true
-        rear_left_wheel_link:
-          Value: true
-        rear_right_wheel_link:
-          Value: true
-        screen:
-          Value: true
-        top_chassis_link:
-          Value: true
-        top_plate_front_link:
-          Value: true
-        top_plate_link:
-          Value: true
-        top_plate_rear_link:
-          Value: true
-        ur_arm_base:
-          Value: true
-        ur_arm_base_link:
-          Value: true
-        ur_arm_ee_link:
-          Value: true
-        ur_arm_tool0:
-          Value: true
-        ur_arm_wrist_3_link:
-          Value: true
         velodyne:
-          Value: true
-        zed_camera_center:
-          Value: true
-        zed_left_camera_frame:
-          Value: true
-        zed_left_camera_optical_frame:
-          Value: true
-        zed_link:
-          Value: true
-        zed_right_camera_frame:
-          Value: true
-        zed_right_camera_optical_frame:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -154,47 +76,8 @@ Visualization Manager:
         map:
           odom:
             base_link:
-              base_footprint:
+              velodyne:
                 {}
-              front_bumper_link:
-                {}
-              front_left_wheel_link:
-                {}
-              front_right_wheel_link:
-                {}
-              imu_link:
-                {}
-              inertial_link:
-                {}
-              rear_bumper_link:
-                {}
-              rear_left_wheel_link:
-                {}
-              rear_right_wheel_link:
-                {}
-              top_chassis_link:
-                {}
-              top_plate_link:
-                bay_cover:
-                  {}
-                fssl01_arch:
-                  screen:
-                    {}
-                  zed_link:
-                    zed_camera_center:
-                      zed_left_camera_frame:
-                        zed_left_camera_optical_frame:
-                          velodyne:
-                            {}
-                      zed_right_camera_frame:
-                        zed_right_camera_optical_frame:
-                          {}
-                top_plate_front_link:
-                  ur_arm_base_link:
-                    ur_arm_base:
-                      {}
-                top_plate_rear_link:
-                  {}
       Update Interval: 0
       Value: true
     - Class: rviz/Image
@@ -297,7 +180,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: Intensity
       Decay Time: 0
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 255
@@ -314,7 +197,42 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: Odometry
+      Position Tolerance: 0.10000000149011612
+      Queue Size: 10
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /odometry
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -343,7 +261,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 11.298328399658203
+      Distance: 7.162106513977051
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -351,17 +269,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -1.5495147705078125
-        Y: 3.4719488620758057
-        Z: 3.5762786865234375e-06
+        X: -8.642312049865723
+        Y: 0.36928504705429077
+        Z: 2.708597094169818e-06
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7203988432884216
+      Pitch: 0.7853987216949463
       Target Frame: ""
-      Yaw: 2.801741361618042
+      Yaw: 5.961740970611572
     Saved: ~
 Window Geometry:
   Displays:

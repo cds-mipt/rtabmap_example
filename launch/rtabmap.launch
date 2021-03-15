@@ -2,7 +2,7 @@
 
     <!-- Static transform from left camera to LIDAR -->
     <node pkg="tf2_ros" type="static_transform_publisher" name="zed_left_camera_optical_frame_to_velodyne"
-        args="5.214154202176700392e-02 -1.846812214940576902e-01 -4.561479952008089256e-02 -3.046857448372968236e+00 -1.631619169438448314e+00 -1.657808369943630566e+00 zed_left_camera_optical_frame velodyne"/>
+        args="+4.0627e-04 -4.2629e-04 +1.7492e-01 0 0 0 base_link velodyne"/>
 
     <!-- Arguments -->
     
@@ -20,7 +20,7 @@
     <!-- odom - odometry to use -->
     <arg name="odom" default="openvslam"/>
     <!-- Custom node to convert OpenVSLAM odom from camera frame to base_link and publish dynamic transform from odom to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="rtabmap_example" type="openvslam_odom_to_base_link.py" name="openvslam_odom_to_base_link" output="screen" args="$(arg openvslam_drift)"/>
+    <node pkg="rtabmap_example" type="openvslam_odom_to_base_link.py" name="openvslam_odom_to_base_link" output="screen" args="$(arg openvslam_drift)"/>
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
     
@@ -34,7 +34,7 @@
     <!-- Rtabmap mapping -->
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" ns="rtabmap" output="screen" args="$(arg rtabmap_args)">
         <!-- remap топиков для чтения данных -->
-        <remap from="odom" to="$(arg odom_topic)"/>
+        <remap from="odom" to="/odometry"/>
 
         <remap from="left/image_rect" to="/zed_node/left/image_rect_color"/>
         <remap from="left/camera_info" to="/zed_node/left/camera_info"/>
@@ -73,8 +73,6 @@
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
         <param name="Grid/3D" value="false"/>
-        
-        <param name="Mem/STMSize" value="10"/>
     </node>
 
 </launch>
