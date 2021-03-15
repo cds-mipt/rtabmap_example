@@ -73,8 +73,6 @@
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
         <param name="Grid/3D" value="false"/>
-        
-        <param name="Mem/STMSize" value="10"/>
     </node>
 
 </launch>
