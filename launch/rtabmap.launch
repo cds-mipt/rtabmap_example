@@ -73,6 +73,12 @@
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
         <param name="Grid/3D" value="false"/>
+        
+        <param name="Grid/RangeMax" value="0"/>
+        <param name="Grid/CellSize" value="0.05"/>
+        <param name="Grid/ScanDecimation" value="1"/>
+        <param name="Grid/PreVoxelFiltering" value="true"/>
+        <param name="Grid/MapFrameProjection" value="false"/>
     </node>
 
 </launch>
