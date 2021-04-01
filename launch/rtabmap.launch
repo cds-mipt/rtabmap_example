@@ -1,10 +1,11 @@
 <launch>
 
-    <!-- Static transform from left camera to LIDAR -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="zed_left_camera_optical_frame_to_velodyne"
-        args="5.214154202176700392e-02 -1.846812214940576902e-01 -4.561479952008089256e-02 -3.046857448372968236e+00 -1.631619169438448314e+00 -1.657808369943630566e+00 zed_left_camera_optical_frame velodyne"/>
-
     <!-- Arguments -->
+    
+    <!-- pub_lidar_tf - if to publish static transform from left camera to lidar -->
+    <arg name="pub_lidar_tf" default="false"/>
+    <node if="$(arg pub_lidar_tf)" pkg="tf2_ros" type="static_transform_publisher" name="zed_left_camera_optical_frame_to_velodyne_transform"
+        args="4.632155672047202216e-02 -1.327858803524132048e-01 -6.092748914769485769e-02 -2.109805266472031704e+00 -1.588226287078796428e+00 -2.618237322666464806e+00 zed_left_camera_optical_frame velodyne"/>
     
     <!-- load_db - if load database -->
     <arg name="load_db" default="false"/>
@@ -20,7 +21,15 @@
     <!-- odom - odometry to use -->
     <arg name="odom" default="openvslam"/>
     <!-- Custom node to convert OpenVSLAM odom from camera frame to base_link and publish dynamic transform from odom to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="rtabmap_example" type="openvslam_odom_to_base_link.py" name="openvslam_odom_to_base_link" output="screen" args="$(arg openvslam_drift)"/>
+    <node if="$(eval odom == 'openvslam')" pkg="occupancy_grid_utils" type="transform_odometry.py" name="transfoem_odometry" output="screen"
+        args="--in-odom-topic /OpenVSLAM/odom \
+              --from-frame zed_left_camera_optical_frame \
+              --to-frame base_link \
+              --odom-frame odom \
+              --out-odom-topic /OpenVSLAM/odom_base_link \
+              --publish-odom-tf \
+              --drift-factor $(arg openvslam_drift)"/>
+        
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
     
