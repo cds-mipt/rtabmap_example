@@ -21,7 +21,7 @@
     <!-- odom - odometry to use -->
     <arg name="odom" default="openvslam"/>
     <!-- Custom node to convert OpenVSLAM odometry from camera frame to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="occupancy_grid_utils" type="transform_odometry.py" name="transfoem_odometry" output="screen"
+    <node if="$(eval odom == 'openvslam')" pkg="occupancy_grid_utils" type="transform_odometry.py" name="transform_odometry" output="screen"
         args="--in-odom-topic /OpenVSLAM/odom \
               --from-frame zed_left_camera_optical_frame \
               --to-frame base_link \
