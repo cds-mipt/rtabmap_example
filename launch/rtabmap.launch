@@ -29,9 +29,13 @@
               --out-odom-topic /OpenVSLAM/odom_base_link \
               --publish-odom-tf \
               --drift-factor $(arg openvslam_drift)"/>
+    <node if="$(eval odom == 'fused')" pkg="occupancy_grid_utils" type="publish_odometry_transformation.py" name="publish_odometry_transformation" output="screen"
+        args="--odom-topic /fused_odom \
+              --target-frame base_link"/>
         
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
+    <arg if="$(eval odom == 'fused')" name="odom_topic" value="/fused_odom"/>
     
     <!-- local - localization mode, otherwise mapping mode -->
     <arg name="local" default="false"/>
@@ -39,6 +43,7 @@
     <!-- data to read -->
     <arg name="rgb" default="true"/>
     <arg name="depth" default="true"/>
+    <arg name="stereo" default="false"/>
 
     <!-- Rtabmap -->
     <node pkg="rtabmap_ros" type="rtabmap" name="rtabmap" ns="rtabmap" output="screen" args="$(arg rtabmap_args)">
@@ -58,7 +63,7 @@
 
         <!-- Данные, на которые подписывается rtabmap -->
         <param name="subscribe_rgb" value="$(arg rgb)"/>
-        <param name="subscribe_stereo" value="false"/>
+        <param name="subscribe_stereo" value="$(arg stereo)"/>
         <param name="subscribe_depth" value="$(arg depth)"/>
         <param name="subscribe_rgbd" value="false"/>
         <param name="subscribe_scan" value="false"/>
