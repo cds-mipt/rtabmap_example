@@ -30,8 +30,7 @@
               --publish-odom-tf \
               --drift-factor $(arg openvslam_drift)"/>
     <node if="$(eval odom == 'fused')" pkg="occupancy_grid_utils" type="publish_odometry_transformation.py" name="publish_odometry_transformation" output="screen"
-        args="--odom-topic /fused_odom \
-              --target-frame base_link"/>
+        args="--odom-topic /fused_odom"/>
         
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
