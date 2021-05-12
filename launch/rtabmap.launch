@@ -21,7 +21,7 @@
     <!-- odom - odometry to use -->
     <arg name="odom" default="openvslam"/>
     <!-- Custom node to convert OpenVSLAM odometry from camera frame to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="occupancy_grid_utils" type="transform_odometry.py" name="transform_odometry" output="screen"
+    <node if="$(eval odom == 'openvslam')" pkg="ros_utils" type="transform_odometry.py" name="transform_odometry" output="screen"
         args="--in-odom-topic /OpenVSLAM/odom \
               --from-frame zed_left_camera_optical_frame \
               --to-frame base_link \
@@ -29,7 +29,7 @@
               --out-odom-topic /OpenVSLAM/odom_base_link \
               --publish-odom-tf \
               --drift-factor $(arg openvslam_drift)"/>
-    <node if="$(eval odom == 'fused')" pkg="occupancy_grid_utils" type="publish_odometry_transform.py" name="publish_odometry_transform" output="screen"
+    <node if="$(eval odom == 'fused')" pkg="ros_utils" type="publish_odometry_transform.py" name="publish_odometry_transform" output="screen"
         args="--odom-topic /fused_odom"/>
         
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
