@@ -35,6 +35,7 @@
     <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
     <arg if="$(eval odom == 'fused')" name="odom_topic" value="/fused_odom"/>
+    <arg if="$(eval odom == 'lol')" name="odom_topic" value="/lol_odom"/>
     
     <!-- local - localization mode, otherwise mapping mode -->
     <arg name="local" default="false"/>
