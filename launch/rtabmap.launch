@@ -19,20 +19,10 @@
     <arg name="openvslam_drift" default="0"/> <!-- 0.005 -->
     
     <!-- odom - odometry to use -->
-    <arg name="odom" default="openvslam"/>
-    <!-- Custom node to convert OpenVSLAM odometry from camera frame to base_link -->
-    <node if="$(eval odom == 'openvslam')" pkg="ros_utils" type="transform_odometry.py" name="transform_odometry" output="screen"
-        args="--in-odom-topic /OpenVSLAM/odom \
-              --from-frame zed_left_camera_optical_frame \
-              --to-frame base_link \
-              --odom-frame odom \
-              --out-odom-topic /OpenVSLAM/odom_base_link \
-              --publish-odom-tf \
-              --drift-factor $(arg openvslam_drift)"/>
+    <arg name="odom" default="fused"/>
     <node if="$(eval odom == 'fused')" pkg="ros_utils" type="publish_odometry_transforms.py" name="publish_odometry_transforms" output="screen"
         args="--odom-topic /fused_odom"/>
-        
-    <arg if="$(eval odom == 'openvslam')" name="odom_topic" value="/OpenVSLAM/odom_base_link"/>
+
     <arg if="$(eval odom == 'rtabmap')" name="odom_topic" value="odom"/>
     <arg if="$(eval odom == 'fused')" name="odom_topic" value="/fused_odom"/>
     <arg if="$(eval odom == 'lol')" name="odom_topic" value="/lol_odom"/>
