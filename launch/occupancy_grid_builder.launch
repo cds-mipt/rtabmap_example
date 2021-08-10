@@ -1,0 +1,32 @@
+<launch>
+
+    <!-- Arguments -->
+
+    <!-- Occupanyc grid builder -->
+    <node pkg="rtabmap_ros" type="occupancy_grid_builder" name="occupancy_grid_builder" output="screen" args="">
+        <!-- remap топиков для чтения данных -->
+        <remap from="odom" to="/lol_odom"/>
+        <remap from="scan_cloud" to="/velodyne_points"/>
+        
+        <!-- Параметры синхронизации сообщений -->
+        <param name="approx_sync" value="true"/>
+        <param name="queue_size" value="10"/>
+        
+        <!-- Параметры -->
+        <param name="Mem/LaserScanDownsampleStepSize" value="1"/>
+        <param name="Mem/LaserScanVoxelSize" value="0.0"/>
+        <param name="Mem/LaserScanNormalK" value="0"/>
+        <param name="Mem/LaserScanNormalRadius" value="0.0"/>
+        
+        <!-- Параметры -->
+        <param name="Grid/CellSize" value="0.05"/>
+        <param name="Grid/RayTracing" value="true"/>
+        <param name="Grid/FromDepth" value="false"/>
+        <param name="Grid/RangeMax" value="0"/>
+        <param name="Grid/MaxObstacleHeight" value="1.5"/>
+        <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
+        <param name="Grid/3D" value="false"/>
+    </node>
+
+</launch>
+
