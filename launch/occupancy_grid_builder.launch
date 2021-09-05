@@ -1,6 +1,10 @@
 <launch>
 
     <!-- Arguments -->
+    <arg name="db_path" default=""/>
+    <arg name="load_db" default="false"/>
+    <arg name="save_db" default="false"/>
+    <arg name="sync_save" default="true"/>
 
     <!-- Occupanyc grid builder -->
     <node pkg="rtabmap_ros" type="occupancy_grid_builder" name="occupancy_grid_builder" output="screen" args="">
@@ -25,9 +29,10 @@
         <param name="subscribe_scan_cloud" value="true"/>
         
         <!-- Загрузка / сохранение карты -->
-        <param name="db_path" value="/home/cds-jetson-host/catkin_ws/test.db"/>
-        <param name="load_db" value="false"/>
-        <param name="save_db" value="true"/>
+        <param name="db_path" value="$(arg db_path)"/>
+        <param name="load_db" value="$(arg load_db)"/>
+        <param name="save_db" value="$(arg save_db)"/>
+        <param name="sync_save" value="$(arg sync_save)"/>
         
         <!-- Параметры -->
         <param name="Grid/CellSize" value="0.05"/>
