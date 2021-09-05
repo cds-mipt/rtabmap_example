@@ -16,18 +16,23 @@
         <param name="approx_sync" value="true"/>
         <param name="queue_size" value="10"/>
         
-        <!-- Данные, на которые подписывается rtabmap -->
-        <param name="subscribe_rgb" value="true"/>
+        <!-- Данные, на которые подписываться -->
+        <param name="subscribe_rgb" value="false"/>
         <param name="subscribe_stereo" value="false"/>
-        <param name="subscribe_depth" value="true"/>
+        <param name="subscribe_depth" value="false"/>
         <param name="subscribe_rgbd" value="false"/>
         <param name="subscribe_scan" value="false"/>
-        <param name="subscribe_scan_cloud" value="false"/>
+        <param name="subscribe_scan_cloud" value="true"/>
+        
+        <!-- Загрузка / сохранение карты -->
+        <param name="db_path" value="/home/cds-jetson-host/catkin_ws/test.db"/>
+        <param name="load_db" value="false"/>
+        <param name="save_db" value="true"/>
         
         <!-- Параметры -->
         <param name="Grid/CellSize" value="0.05"/>
         <param name="Grid/RayTracing" value="true"/>
-        <param name="Grid/FromDepth" value="true"/>
+        <param name="Grid/FromDepth" value="false"/>
         <param name="Grid/RangeMax" value="0"/>
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
