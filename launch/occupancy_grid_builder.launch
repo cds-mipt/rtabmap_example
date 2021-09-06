@@ -4,6 +4,7 @@
     <arg name="db_path" default=""/>
     <arg name="load_db" default="false"/>
     <arg name="save_db" default="false"/>
+    <arg name="simple_save" default="true"/>
     <arg name="sync_save" default="true"/>
 
     <!-- Occupanyc grid builder -->
@@ -32,6 +33,7 @@
         <param name="db_path" value="$(arg db_path)"/>
         <param name="load_db" value="$(arg load_db)"/>
         <param name="save_db" value="$(arg save_db)"/>
+        <param name="simple_save" value="$(arg simple_save)"/>
         <param name="sync_save" value="$(arg sync_save)"/>
         
         <!-- Параметры -->
