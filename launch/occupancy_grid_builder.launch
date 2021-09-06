@@ -9,6 +9,9 @@
 
     <!-- Occupanyc grid builder -->
     <node pkg="rtabmap_ros" type="occupancy_grid_builder" name="occupancy_grid_builder" output="screen" args="">
+        <!-- Топик, куда будет публиковаться карта -->
+        <remap from="grid_map" to="/grid_map"/>
+    
         <!-- remap топиков для чтения данных -->
         <remap from="odom" to="/lol_odom"/>
         <remap from="scan_cloud" to="/velodyne_points"/>
@@ -40,9 +43,9 @@
         <param name="Grid/CellSize" value="0.05"/>
         <param name="Grid/RayTracing" value="true"/>
         <param name="Grid/FromDepth" value="false"/>
-        <param name="Grid/RangeMax" value="0"/>
+        <param name="Grid/RangeMax" value="8"/>
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
-        <param name="Grid/MaxGroundHeight" value="0.01"/> <!-- Должно быть отлично от нуля -->
+        <param name="Grid/MaxGroundHeight" value="0.1"/>
         <param name="Grid/3D" value="false"/>
         
         <param name="Grid/ScanDecimation" value="3"/>
