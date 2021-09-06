@@ -2,11 +2,6 @@
 
     <!-- Arguments -->
     
-    <!-- pub_lidar_tf - if to publish static transform from left camera to lidar -->
-    <arg name="pub_lidar_tf" default="false"/>
-    <node if="$(arg pub_lidar_tf)" pkg="tf2_ros" type="static_transform_publisher" name="zed_left_camera_optical_frame_to_velodyne_transform"
-        args="4.632155672047202216e-02 -1.327858803524132048e-01 -6.092748914769485769e-02 -2.109805266472031704e+00 -1.588226287078796428e+00 -2.618237322666464806e+00 zed_left_camera_optical_frame velodyne"/>
-    
     <!-- load_db - if load database -->
     <arg name="load_db" default="false"/>
     <arg if="$(arg load_db)" name="rtabmap_args" value=""/>
@@ -14,9 +9,6 @@
     
     <!-- db_path - path to database -->
     <arg name="db_path" default="~/.ros/rtabmap.db"/>
-    
-    <!-- openvslam_drift - OpenVSLAM odometry drift factor -->
-    <arg name="openvslam_drift" default="0"/> <!-- 0.005 -->
     
     <!-- odom - odometry to use -->
     <arg name="odom" default="fused"/>
@@ -49,6 +41,7 @@
         
         <remap from="rgb/image" to="/zed_node/left/image_rect_color"/>
         <remap from="rgb/camera_info" to="/zed_node/left/camera_info"/>
+        <param name="rgb/image_transport" type="string" value="compressed"/>
         <remap from="depth/image" to="/zed_node/depth/depth_registered"/>
 
         <!-- Данные, на которые подписывается rtabmap -->
@@ -71,7 +64,7 @@
         <param unless="$(arg local)" name="Mem/IncrementalMemory" value="true"/>
         
         <!-- Параметры rtabmap -->
-        <param name="Rtabmap/DetectionRate" value="100"/>
+        <param name="Rtabmap/DetectionRate" value="10"/>
         <param name="Grid/RayTracing" value="true"/>
         <param name="Grid/FromDepth" value="false"/>
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
