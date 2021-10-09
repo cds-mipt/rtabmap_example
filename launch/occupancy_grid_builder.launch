@@ -12,7 +12,7 @@
         <remap from="grid_map" to="/grid_map"/>
     
         <!-- remap топиков для чтения данных -->
-        <remap from="odom" to="/lol_odom"/>
+        <remap from="odom" to="/husky_velocity_controller/odom"/>
         <remap from="scan_cloud" to="/velodyne_points"/>
         <remap from="rgb/image" to="/zed_node/left/image_rect_color"/>
         <remap from="rgb/camera_info" to="/zed_node/left/camera_info"/>
@@ -24,6 +24,7 @@
         <param name="queue_size" value="10"/>
         
         <!-- Данные, на которые подписываться -->
+        <param name="subscribe_odom" value="true"/>
         <param name="subscribe_rgb" value="false"/>
         <param name="subscribe_stereo" value="false"/>
         <param name="subscribe_depth" value="false"/>
@@ -38,10 +39,10 @@
         <param name="save_assembled_map" value="$(arg save_assembled_map)"/>
         
         <!-- Параметры -->
-        <param name="Grid/CellSize" value="0.05"/>
+        <param name="Grid/CellSize" value="0.10"/>
         <param name="Grid/RayTracing" value="true"/>
         <param name="Grid/FromDepth" value="false"/>
-        <param name="Grid/RangeMax" value="8"/>
+        <param name="Grid/RangeMax" value="0"/>
         <param name="Grid/MaxObstacleHeight" value="1.5"/>
         <param name="Grid/MaxGroundHeight" value="0.1"/>
         <param name="Grid/3D" value="false"/>
