@@ -6,6 +6,9 @@
     <arg name="save_map" default="false"/>
     <arg name="save_assembled_map" default="false"/>
 
+    <arg name="min_semantic_range" default="0"/>
+    <arg name="max_semantic_range" default="0"/>
+
     <!-- Occupanyc grid builder -->
     <node pkg="rtabmap_ros" type="occupancy_grid_builder" name="occupancy_grid_builder" output="screen" args="">
         <!-- Топик, куда будет публиковаться карта -->
@@ -37,6 +40,9 @@
         <param name="load_map" value="$(arg load_map)"/>
         <param name="save_map" value="$(arg save_map)"/>
         <param name="save_assembled_map" value="$(arg save_assembled_map)"/>
+
+        <param name="min_semantic_range" value="$(arg min_semantic_range)"/>
+        <param name="max_semantic_range" value="$(arg max_semantic_range)"/>
 
         <!-- Параметры -->
         <param name="Grid/CellSize" value="0.10"/>
