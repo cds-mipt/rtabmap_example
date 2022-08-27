@@ -16,6 +16,7 @@
 
         <!-- remap топиков для чтения данных -->
         <remap from="odom" to="/husky_velocity_controller/odom"/>
+        <remap from="optimized_poses" to="/optimized_poses"/>
         <remap from="scan_cloud" to="/velodyne_points"/>
         <remap from="rgb/image" to="/zed_node/left/image_rect_color"/>
         <remap from="rgb/camera_info" to="/zed_node/left/camera_info"/>
